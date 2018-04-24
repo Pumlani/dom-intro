@@ -1,12 +1,68 @@
-// get a reference to the sms or call radio buttons
+//Get bill item type radio button selected
+var checkedRadioBtn=document.querySelector(".billItemTypeRadio");
+//Button to press to add item to bill
+var radioAdd = document.querySelector(".radioBillAddBtn");
+//Where the call total should be displayed
+var callsTotalElem=document.querySelector(".callTotalTwo");
+//Where the sms total should be displayed
+var smsTotalElem=document.querySelector(".smsTotalTwo");
+//Where overall total should be displayed
+var totalCostElem=document.querySelector(".totalTwo");
 
-//get a reference to the add button
+//declaring variables
+var callsTotal = 0;
+var smsTotal = 0;
+var totalCost = 0;
 
-//create a variable that will keep track of the total bill
+function checkBillTotal(){
+    // get the value entered in the billType
+        var checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
+if (checkedRadioBtn){
+    var billItemType = checkedRadioBtn.value
+    // billItemType will be 'call' or 'sms'
+}
+    // update the correct total
+    if (billItemType === "call"){
+        callsTotal += 2.75
+    }
+    else if (billItemType === "sms"){
+        smsTotal += 0.75;
+    }
 
-//add an event listener for when the add button is pressed
+    //update the totals that is displayed on the screen.
+    //for calls
+    callsTotalElem.innerHTML = callsTotal.toFixed(2);
+    //for sms
+    smsTotalElem.innerHTML = smsTotal.toFixed(2);
+    //for total
+    totalCost = callsTotal + smsTotal;
+    //for total DOM element now
+    totalCostElem.innerHTML = totalCost.toFixed(2);
+}
 
-//in the event listener get the value from the billItemTypeRadio radio buttons
-// * add the appropriate value to the running total
-// * add nothing for invalid values that is not 'call' or 'sms'.
-// * display the latest total on the screen
+function color(){
+
+    //color the total based on the criteria
+    if (totalCost <30){
+        // adding the danger class will make the text red
+        totalCostElem.classList.remove("warning");
+        totalCostElem.classList.remove("danger");
+      }
+
+  else if(totalCost>30 && 50>totalCost){
+    totalCostElem.classList.add("warning");
+    totalCostElem.classList.remove("danger");
+    }
+
+  else if (totalCost > 50){
+        totalCostElem.classList.add("danger");
+        totalCostElem.classList.remove("warning");
+    }
+}
+
+
+radioAdd.addEventListener('click',
+function(){
+  checkBillTotal();
+  color();
+});
