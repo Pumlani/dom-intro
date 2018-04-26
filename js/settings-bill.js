@@ -1,110 +1,108 @@
 // get a reference to the sms or call radio buttons
 var callOrsmsElem = document.querySelector(".billItemTypeWithSettings")
 // get refences to all the settings fields
-var callCostSettingElem = document.querySelector(".callCostSetting");
-var smsCostSettingElem = document.querySelector(".smsCostSetting");
-var warningLevelSettingElem = document.querySelector(".warningLevelSetting");
-var criticalLevelSettingElem = document.querySelector(".criticalLevelSetting");
+var callCostSettingElement = document.querySelector(".callCostSetting");
+var smsCostSettingElement = document.querySelector(".smsCostSetting");
+var warningLevelSettingElement = document.querySelector(".warningLevelSetting");
+var criticalLevelSettingElement = document.querySelector(".criticalLevelSetting");
 
-var callTotalSettingsElem = document.querySelector(".callTotalSettings");
-var smsTotalSettingsELem = document.querySelector(".smsTotalSettings");
-var totalSettingsElem = document.querySelector(".totalSettings");
+var callTotalSettingsAmount = document.querySelector(".callTotalSettings");
+var smsTotalSettingsAmount = document.querySelector(".smsTotalSettings");
+var totalSettingsAmount = document.querySelector(".totalSettings");
+
 //get a reference to the add button
 var theAddingButton = document.querySelector(".sumBtn");
 //get a reference to the 'Update settings' button
 var theUpdateSettingsBtn = document.querySelector(".updateSettings");
 // create a variables that will keep track of all the settings
-var callCostSett = 0;
-var smsCostSett = 0;
-var warningCosSettt = 0;
-var criticalCostSett = 0;
+var callCostSetting =0;
+var smsCostSetting = 0;
+var warningCostSetting =0;
+var criticalCostSetting =0;
 // create a variables that will keep track of all three totals.
-var callSettingsTotal = 0;
-var smsSettingsTotal = 0;
-var sumSettingsTotal = 0;
+var callAmount = 0;
+var smsAmount = 0;
+var TotalAmount = 0;
 
-function billWithSettings () {
+function billWithSettingsFunction () {
   var checkedRadioBtn = document.querySelector("input[name='billItemTypeWithSettings']:checked");
 if (checkedRadioBtn){
     var billItemTypeWithSettings = checkedRadioBtn.value;
     // billItemType will be 'call' or 'sms'
     }
-    if(billItemTypeWithSettings === "call"){
-      callSettingsTotal += callCostSett;
-      sumSettingsTotal += callCostSett;
 
-      if(sumSettingsTotal >  criticalCostSett){
-        var mode = sumSettingsTotal-criticalCostSett;
-        sumSettingsTotal -= mode;
-        callSettingsTotal -= mode;
+      if(billItemTypeWithSettings === "call"){
+       callAmount +=  callCostSetting;
+       TotalAmount += callCostSetting;
+
+       if(TotalAmount > criticalCostSetting){
+         var mode = TotalAmount - criticalCostSetting;
+         callAmount -= mode;
+         TotalAmount -= mode;
+       }
+       callTotalSettingsAmount.innerHTML=callAmount.toFixed(2);
+       totalSettingsAmount.innerHTML=TotalAmount.toFixed(2);
+
+     }
+
+       if(billItemTypeWithSettings === "sms"){
+         smsAmount += smsCostSetting;
+         TotalAmount += smsCostSetting;
+
+         if(TotalAmount > criticalCostSetting){
+           var mode = TotalAmount - criticalCostSetting;
+           smsAmount  -=  mode;
+           TotalAmount -= mode;
+         }
+
+       }
+
+      smsTotalSettingsAmount.innerHTML=smsAmount.toFixed(2);
+      //TotalAmount= smsAmount+callAmount;
+      totalSettingsAmount.innerHTML=TotalAmount.toFixed(2);
+
       }
 
-      callCostSettingElem,innerHTML=callSettingsTotal.toFixed(2);
-      totalSettingsElem.innerHTML=sumSettingsTotal.toFixed(2);
+function update(){
 
-    }
-    if(billItemTypeWithSettings === "sms"){
-      callSettingsTotal += callCostSett;
-      sumSettingsTotal += callCostSett;
+  var forCall = callCostSettingElement.value;
+  callCostSetting = parseFloat(forCall);
+console.log(callCostSetting);
+  var forSms = smsCostSettingElement.value;
+  smsCostSetting = parseFloat(forSms);
 
-      if(sumSettingsTotal >  criticalCostSett){
-        var mode = sumSettingsTotal-criticalCostSett;
-        sumSettingsTotal -= mode;
-        smsSettingsTotal -= mode;
-      }
+  var forWarning = warningLevelSettingElement.value;
+  warningCostSetting = parseFloat(forWarning);
 
-      smsCostSettingElem,innerHTML=smsSettingsTotal.toFixed(2);
-      totalSettingsElem.innerHTML=sumSettingsTotal.toFixed(2);
-
-    }
+  var forCritical = criticalLevelSettingElement.value;
+  criticalCostSetting = parseFloat(forCritical);
 
 }
-function theUpdate(){
-  //to convert a call string enterd into a numerical value
-  var callIn  = callCostSettingElem.value;
-  callCostSettingElem = parseFloat(callIn);
-  //to convert a sms string entered into a numerical value
-  var smsIn  = smsCostSettingElem.value;
-  smsCostSettingElem = parseFloat(smsIn);
-  //to convert a warning string entered into a numerical value
-  var warnignIn  = warningLevelSettingElem.value;
-  warningLevelSettingElem = parseFloat(warnignIn);
-  //to convert a critical string entered into a numerical value
-  var criticaltIn  = criticalLevelSettingElem.value;
-  criticalLevelSettingElem = parseFloat(criticaltIn);
-}
 
-function Screencolor(){
-
-    //color the total based on the criteria
-    if (sumSettingsTotal <  warningLevelSettingElem){
-        // adding the danger class will make the text red
-        totalSettingsElem.classList.remove("warning");
-        totalSettingsElem.classList.remove("danger");
-      }
-
-  else if(sumSettingsTotal > warningLevelSettingElem && criticalLevelSettingElem > sumSettingsTotal){
-    totalSettingsElem.classList.add("warning");
-    totalSettingsElem.classList.remove("danger");
+function  displaycolor(){
+  if (TotalAmount < warningCostSetting){
+      // adding the danger class will make the text red
+      totalSettingsAmount.classList.remove("warning");
+      totalSettingsAmount.classList.remove("danger");
     }
 
-  else if (sumSettingsTotal > criticalLevelSettingElem){
-        totalSettingsElem.classList.add("danger");
-        totalSettingsElem.classList.remove("warning");
-    }
+else if(TotalAmount >= warningCostSetting && criticalCostSetting > TotalAmount){
+  totalSettingsAmount.classList.add("warning");
+  totalSettingsAmount.classList.remove("danger");
+  }
+
+else if (TotalAmount >= criticalCostSetting){
+      totalSettingsAmount.classList.add("danger");
+      totalSettingsAmount.classList.remove("warning");
+  }
 }
 
-//add an event listener for when the 'Update settings' button is pressed
-theUpdateSettingsBtn.addEventListener('click',
-function (){
-  theUpdate();
+theUpdateSettingsBtn.addEventListener('click', function() {
+  update();
 });
-
-//add an event listener for when the add button is pressed
-theAddingButton.addEventListener('click',
-function (){
-billWithSettings();
-Screencolor();
+theAddingButton.addEventListener('click', function() {
+  billWithSettingsFunction();
+  displaycolor();
 });
 
 // in the event listener get the value from the billItemTypeRadio radio buttons
