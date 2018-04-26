@@ -1,18 +1,13 @@
 //get a reference to the calculate button
 var calculateBtnElement = document.querySelector(".calculateBtn");
-
-
 //get a reference to the billTotal element
 var billTotalElement = document.querySelector(".billTotal");
-
 //get a reference to the billString
 var billStringElement = document.querySelector(".billString");
-
 //global scope
 var roundedBillTotal=0;
-
 //create the function that will be called when the calculate button is pressed
-function calculateBtnClicked(){
+function calculateBtnBill(){
     // get the string entered in the textArea
     //  * this function should read the string value entered - split it on a comma.
     var billStringElm = billStringElement.value;
@@ -38,7 +33,8 @@ function calculateBtnClicked(){
     billTotalElement.innerHTML = roundedBillTotal;
 }
 
-function color() {
+function screenBehav() {
+
   if(roundedBillTotal< 20 ) {
   billTotalElement.classList.remove("warning");
   billTotalElement.classList.remove("danger");
@@ -53,11 +49,10 @@ function color() {
   billTotalElement.classList.add("danger");
   }
 }
-
 //link the function to a click event on the calculate button
 calculateBtnElement.addEventListener('click',
 function (){
-  calculateBtnClicked();
-  color();
+  calculateBtnBill();
+  screenBehav();
 }
 );

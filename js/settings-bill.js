@@ -77,20 +77,20 @@ function theUpdate(){
 function Screencolor(){
 
     //color the total based on the criteria
-    if (sumSettingsTotal <  warningCosSettt){
+    if (sumSettingsTotal <  warningLevelSettingElem){
         // adding the danger class will make the text red
-        totalCostElem.classList.remove("warning");
-        totalCostElem.classList.remove("danger");
+        totalSettingsElem.classList.remove("warning");
+        totalSettingsElem.classList.remove("danger");
       }
 
-  else if(totalCost>30 && 50>totalCost){
-    totalCostElem.classList.add("warning");
-    totalCostElem.classList.remove("danger");
+  else if(sumSettingsTotal > warningLevelSettingElem && criticalLevelSettingElem > sumSettingsTotal){
+    totalSettingsElem.classList.add("warning");
+    totalSettingsElem.classList.remove("danger");
     }
 
-  else if (totalCost > 50){
-        totalCostElem.classList.add("danger");
-        totalCostElem.classList.remove("warning");
+  else if (sumSettingsTotal > criticalLevelSettingElem){
+        totalSettingsElem.classList.add("danger");
+        totalSettingsElem.classList.remove("warning");
     }
 }
 
@@ -98,19 +98,19 @@ function Screencolor(){
 theUpdateSettingsBtn.addEventListener('click',
 function (){
   theUpdate();
-}
+});
 
 //add an event listener for when the add button is pressed
 theAddingButton.addEventListener('click',
 function (){
 billWithSettings();
 Screencolor();
-}
+});
 
-//in the event listener get the value from the billItemTypeRadio radio buttons
+// in the event listener get the value from the billItemTypeRadio radio buttons
 // * add the appropriate value to the call / sms total
 // * add the appropriate value to the overall total
 // * add nothing for invalid values that is not 'call' or 'sms'.
 // * display the latest total on the screen.
 // * check the value thresholds and display the total value in the right color.
-//Get bill item type radio button selected
+// Get bill item type radio button selected
