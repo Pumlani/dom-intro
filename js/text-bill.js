@@ -1,15 +1,58 @@
-// get a reference to the textbox where the bill type is to be entered
 
-//get a reference to the add button
 
-//create a variable that will keep track of the total bill
 
-//add an event listener for when the add button is pressed
+var factfuncObj = factfunc();
 
-//in the event listener check if the value in the bill type textbox is 'sms' or 'call'
-// * add the appropriate value to the running total
-// * add nothing for invalid values that is not 'call' or 'sms'.
-// * display the latest total on the screen=document.
+var billTypeEntered = billTypeTextEnter.value.trim();
+
+function TEXT() {
+
+  factfuncObj.calc(billTypeEntered);
+  calls.innerHTML.factfuncObj.calls();
+  sms.innerHTML.factfuncObj.sms();
+  totalCostElement.innerHTML = totalCostOne;
+
+
+  if (totalCostOne < 30) {
+    // adding the danger class will make the text red
+    totalCostElement.classList.remove("warning");
+    totalCostElement.classList.remove("danger");
+  } else if (totalCostOne > 30 && 50 > totalCostOne) {
+    totalCostElement.classList.add("warning");
+    totalCostElement.classList.remove("danger");
+  } else if (totalCostOne > 50) {
+    totalCostElement.classList.add("danger");
+    totalCostElement.classList.remove("warning");
+  }
+}
+
+textTotalAddBtn.addEventListener('click', TEXT);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 var textTotalAddBtn=document.querySelector(".addToBillBtn");
 var billTypeTextEnter=document.querySelector(".billTypeText");
 var callsTotalElement=document.querySelector(".callTotalOne");
@@ -36,8 +79,7 @@ function textBillTotal(){
     smsTotalElement.innerHTML = smsTotalOne.toFixed(2);
     totalCostOne = callsTotalOne + smsTotalOne;
     totalCostElement.innerHTML = totalCostOne.toFixed(2);
-}
-
+}*//*
 function colorBehaviour(){
 
     //color the total based on the criteria
@@ -62,4 +104,4 @@ textTotalAddBtn.addEventListener('click',
 function (){
   textBillTotal();
   colorBehaviour();
-});
+});*/

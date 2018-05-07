@@ -1,21 +1,25 @@
 describe('textBillTotal function', function() {
   it('should return the total cost of a single call', function() {
+    var factfuncObj = factfunc();
 
-    assert.equal(textBillTotal("call"), 2.75)
+    assert.equal(factfuncObj.calc("call"), 2.75)
 
   });
 
   it('should return the total cost of a single sms', function() {
-
-    assert.equal(textBillTotal("sms"), 0.75)
+    var factfuncObj = factfunc();
+    assert.equal(factfuncObj.calc("sms"), 0.75)
   });
 
   it('should return the total cost of three calls.', function() {
-    assert.equal(textBillTotal("call,call,call"), 8.25)
+    var factfuncObj = factfunc();
+    assert.equal(factfuncObj.calc("call"))
 
   });
   it('should return the total cost of three sms.', function() {
-    assert.equal(textBillTotal("sms,sms,sms"), 2.25)
+    var factfuncObj = factfunc();
+
+    assert.equal(factfuncObj.calc("sms"), 2.25)
 
   });
 

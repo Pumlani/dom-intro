@@ -1,22 +1,13 @@
-var textTotalAddBtn = document.querySelector(".addToBillBtn");
-var billTypeTextEnter = document.querySelector(".billTypeText");
-var callsTotalElement = document.querySelector(".callTotalOne");
-var smsTotalElement = document.querySelector(".smsTotalOne");
-var totalCostElement = document.querySelector(".totalOne");
-
-var callsTotalOne = 0;
-var smsTotalOne = 0;
-var totalCostOne = 0;
-
 function factfunc() {
 
+  var totalCostOne = 0;
   var smsTotalOne = 0;
   var callsTotalOne = 0;
 
   function textBillTotal(bill) {
 
     //var bill = bill.split(",");
-    // update the correct total
+
     if (bill === "call") {
       callsTotalOne += 2.75;
     } else if (bill === "sms") {
@@ -25,9 +16,7 @@ function factfunc() {
     totalCostOne = callsTotalOne + smsTotalOne;
 
     return totalCostOne.toFixed(2);
-
-
-  }
+}
 
   function getCalls() {
     return callsTotalOne;
@@ -39,11 +28,12 @@ function factfunc() {
 
   return {
 
-    calls: getCalls();
-    sms: getSms();
-    calc: textBillTotal();
+    calls: getCalls,
+    sms: getSms,
+    calc: textBillTotal
   }
 }
+/*
 var factfuncObj = factfunc();
 
 var billTypeEntered = billTypeTextEnter.value.trim();
