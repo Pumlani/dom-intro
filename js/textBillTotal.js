@@ -4,19 +4,19 @@ function factfunc() {
   var smsTotalOne = 0;
   var callsTotalOne = 0;
 
-  function textBillTotal(bill) {
+  function textBillTotalone(textBillElement) {
 
-    //var bill = bill.split(",");
+    //var textBillElement = textBillElement.split(",");
 
-    if (bill === "call") {
+    if (textBillElement === "call") {
       callsTotalOne += 2.75;
-    } else if (bill === "sms") {
+    } else if (textBillElement === "sms") {
       smsTotalOne += 0.75;
     }
     totalCostOne = callsTotalOne + smsTotalOne;
 
     return totalCostOne.toFixed(2);
-}
+  }
 
   function getCalls() {
     return callsTotalOne;
@@ -26,17 +26,23 @@ function factfunc() {
     return smsTotalOne;
   }
 
-  return {
+  function getSum() {
 
+    totalCostOne = callsTotalOne + smsTotalOne;
+    return totalCostOne;
+  }
+
+  return {
+    totalBill: getSum,
     calls: getCalls,
     sms: getSms,
-    calc: textBillTotal
+    calc: textBillTotalone
   }
 }
 /*
 var factfuncObj = factfunc();
 
-var billTypeEntered = billTypeTextEnter.value.trim();
+var textBillElementTypeEntered = billTypeTextEnter.value.trim();
 
 function TEXT() {
 

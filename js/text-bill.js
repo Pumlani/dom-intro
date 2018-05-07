@@ -1,48 +1,45 @@
+document.addEventListener('DOMContentLoaded', function() {
+  var textBillElement = document.querySelector('.billTypeText');
 
+  var callTotalElement = document.querySelector('.callTotalOne');
+  var smsTotalElement = document.querySelector('.smsTotalOne');
+  var totalCostElement = document.querySelector('.totalOne');
 
+  var addButton = document.querySelector('.addToBillBtn');
 
-var factfuncObj = factfunc();
+  var factfuncObj = factfunc();
 
-var billTypeEntered = billTypeTextEnter.value.trim();
+  function display() {
 
-function TEXT() {
-
-  factfuncObj.calc(billTypeEntered);
-  calls.innerHTML.factfuncObj.calls();
-  sms.innerHTML.factfuncObj.sms();
-  totalCostElement.innerHTML = totalCostOne;
-
-
-  if (totalCostOne < 30) {
-    // adding the danger class will make the text red
-    totalCostElement.classList.remove("warning");
-    totalCostElement.classList.remove("danger");
-  } else if (totalCostOne > 30 && 50 > totalCostOne) {
-    totalCostElement.classList.add("warning");
-    totalCostElement.classList.remove("danger");
-  } else if (totalCostOne > 50) {
-    totalCostElement.classList.add("danger");
-    totalCostElement.classList.remove("warning");
-  }
+    var billTypeEntered=textBillElement.value.trim();
+    factfuncObj.calc(billTypeEntered);
+    callTotalElement.innerHTML=factfuncObj.calls().toFixed(2);
+    smsTotalElement.innerHTML=factfuncObj.sms().toFixed(2);
+    totalCostElement.innerHTML = factfuncObj.totalBill().toFixed(2);
 }
+function screenBehaviour(){
+let total = factfuncObj.totalBill();
 
-textTotalAddBtn.addEventListener('click', TEXT);
+    if (total < 30) {
+      // adding the danger class will make the text red
+      totalCostElement.classList.remove("warning");
+      totalCostElement.classList.remove("danger");
+    } else if (total > 30 && 50 > total) {
+      totalCostElement.classList.add("warning");
+      totalCostElement.classList.remove("danger");
+    } else if (total > 50) {
+      totalCostElement.classList.add("danger");
+      totalCostElement.classList.remove("warning");
+    }
+    }
 
 
+  addButton.addEventListener('click', function(){
+  display();
+  screenBehaviour();
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 
 
@@ -79,7 +76,8 @@ function textBillTotal(){
     smsTotalElement.innerHTML = smsTotalOne.toFixed(2);
     totalCostOne = callsTotalOne + smsTotalOne;
     totalCostElement.innerHTML = totalCostOne.toFixed(2);
-}*//*
+}*/
+/*
 function colorBehaviour(){
 
     //color the total based on the criteria
