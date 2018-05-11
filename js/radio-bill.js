@@ -1,68 +1,62 @@
-//Get bill item type radio button selected
-var checkedRadioBtn=document.querySelector(".billItemTypeRadio");
-//Button to press to add item to bill
-var radioAdd = document.querySelector(".radioBillAddBtn");
-//Where the call total should be displayed
-var callsTotalElem=document.querySelector(".callTotalTwo");
-//Where the sms total should be displayed
-var smsTotalElem=document.querySelector(".smsTotalTwo");
-//Where overall total should be displayed
-var totalCostElem=document.querySelector(".totalTwo");
+document.addEventListener('DOMContentLoaded', function() {
+  //Get bill item type radio button selected
+  var checkedRadioBtn = document.querySelector(".billItemTypeRadio");
+  //Button to press to add item to bill
+  var radioAdd = document.querySelector(".radioBillAddBtn");
+  //Where the call total should be displayed
+  var callsTotalElem = document.querySelector(".callTotalTwo");
+  //Where the sms total should be displayed
+  var smsTotalElem = document.querySelector(".smsTotalTwo");
+  //Where overall total should be displayed
+  var totalCostElem = document.querySelector(".totalTwo");
 
-//declaring variables
-var callsTotal = 0;
-var smsTotal = 0;
-var totalCost = 0;
+  //declaring variables
+  var callsTotal = 0;
+  var smsTotal = 0;
+  var totalCost = 0;
 
-function checkBillTotal(){
+  var BillFactoryObj = BillFactory();
+
+  function Display() {
     // get the value entered in the billType
-        var checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
-if (checkedRadioBtn){
-    var billItemType = checkedRadioBtn.value
-    // billItemType will be 'call' or 'sms'
-}
-    // update the correct total
-    if (billItemType === "call"){
-        callsTotal += 2.75
-    }
-    else if (billItemType === "sms"){
-        smsTotal += 0.75;
+    var checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
+    if (checkedRadioBtn) {
+      var billItemType = checkedRadioBtn.value;
+      // billItemType will be 'call' or 'sms'
     }
 
+    BillFactoryObj.calc(billItemType);
     //update the totals that is displayed on the screen.
     //for calls
-    callsTotalElem.innerHTML = callsTotal.toFixed(2);
+    callsTotalElem.innerHTML = BillFactoryObj.calls().toFixed(2);
     //for sms
-    smsTotalElem.innerHTML = smsTotal.toFixed(2);
-    //for total
-    totalCost = callsTotal + smsTotal;
+    smsTotalElem.innerHTML = BillFactoryObj.sms().toFixed(2);
     //for total DOM element now
-    totalCostElem.innerHTML = totalCost.toFixed(2);
-}
+    totalCostElem.innerHTML = BillFactoryObj.totalBill().toFixed(2);
+  }
 
-function color(){
+  function callColor() {
+    console.log('this is color')
 
-    //color the total based on the criteria
-    if (totalCost <30){
-        // adding the danger class will make the text red
-        totalCostElem.classList.remove("warning");
-        totalCostElem.classList.remove("danger");
-      }
+    let total = BillFactoryObj.totalBill();
 
-  else if(totalCost>30 && 50>totalCost){
-    totalCostElem.classList.add("warning");
-    totalCostElem.classList.remove("danger");
+    if (total < 30) {
+      // adding the danger class will make the text red
+      totalCostElem.classList.remove("warning");
+      totalCostElem.classList.remove("danger");
+    } else if (total > 30 && 50 > total) {
+      totalCostElem.classList.add("warning");
+      totalCostElem.classList.remove("danger");
+    } else if (total > 50) {
+      totalCostElem.classList.add("danger");
+      totalCostElem.classList.remove("warning");
     }
-
-  else if (totalCost > 50){
-        totalCostElem.classList.add("danger");
-        totalCostElem.classList.remove("warning");
-    }
-}
+  }
 
 
-radioAdd.addEventListener('click',
-function(){
-  checkBillTotal();
-  color();
+  radioAdd.addEventListener('click', function() {
+    Display();
+    callColor();
+  });
+
 });
