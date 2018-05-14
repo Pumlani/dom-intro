@@ -10,6 +10,11 @@ function SettingsBill(){
   var newCritical = 0;
 
   function computes(billItemTypeWithSettings){
+
+    if (hasReachedCriticalLevel()){
+      return;
+    }
+
     if(billItemTypeWithSettings === "call"){
       callAmount += newCallCost;
       TotalAmount += newCallCost;
@@ -57,6 +62,13 @@ function SettingsBill(){
     return newCritical;
   }
 
+  function hasReachedCriticalLevel(){
+    return getTotalAmount() >= newCritical
+  }
+  function hasReachedWarningLevel(){
+    return getTotalAmount() >= newWarning;
+  }
+
 
   return{
     calculation : computes,
@@ -71,7 +83,9 @@ function SettingsBill(){
 
     call : getCallAmount,
     sms : getSmsAmount,
-    total : getTotalAmount
+    total : getTotalAmount,
+    hasReachedCriticalLevel,
+    hasReachedWarningLevel
   }
 
 }

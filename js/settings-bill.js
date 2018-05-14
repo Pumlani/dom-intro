@@ -17,30 +17,30 @@ document.addEventListener('DOMContentLoaded',function(){
   var theUpdateSettingsBtn = document.querySelector(".updateSettings");
 
 
-  var FactoryObj = SettingsBill();
+  var factoryObj = SettingsBill();
 
 
 
   theAddingButton.addEventListener('click',function(){
-    console.log(FactoryObj.total());
-     if(FactoryObj.total()<FactoryObj.getCritical()){
+    console.log(factoryObj.total());
+     if(factoryObj.total()<factoryObj.getCritical()){
       var checkedRadioBtn = document.querySelector("input[name='billItemTypeWithSettings']:checked");
       if (checkedRadioBtn){
         var itemType = checkedRadioBtn.value;
 
-        FactoryObj.calculation(itemType);
+        factoryObj.calculation(itemType);
 
-        callTotalSettingsAmount.innerHTML= FactoryObj.call().toFixed(2);
-        smsTotalSettingsAmount.innerHTML= FactoryObj.sms().toFixed(2);
-        totalSettingsAmount.innerHTML=  FactoryObj.total().toFixed(2);
+        callTotalSettingsAmount.innerHTML= factoryObj.call().toFixed(2);
+        smsTotalSettingsAmount.innerHTML= factoryObj.sms().toFixed(2);
+        totalSettingsAmount.innerHTML=  factoryObj.total().toFixed(2);
 
-        if (FactoryObj.total() < FactoryObj.getWarning()){
+        if (factoryObj.total() < factoryObj.getWarning()){
           totalSettingsAmount.classList.remove("warning");
           totalSettingsAmount.classList.remove("danger");
-        } else if (FactoryObj.total() >= FactoryObj.getWarning() &&  FactoryObj.total() < FactoryObj.getCritical()){
+        } else if (factoryObj.total() >= factoryObj.getWarning() &&  factoryObj.total() < factoryObj.getCritical()){
           totalSettingsAmount.classList.add("warning");
           totalSettingsAmount.classList.remove("danger");
-        }else if (FactoryObj.total() >= FactoryObj.getCritical()){
+        }else if (factoryObj.total() >= factoryObj.getCritical()){
           totalSettingsAmount.classList.add("danger");
           totalSettingsAmount.classList.remove("warning");
         }
@@ -50,10 +50,10 @@ document.addEventListener('DOMContentLoaded',function(){
 
   theUpdateSettingsBtn.addEventListener('click',function(){
 
-    FactoryObj.setCall(callCostSettingElement.value);
-    FactoryObj.setSms(smsCostSettingElement.value);
-    FactoryObj.Warning(warningLevelSettingElement.value);
-    FactoryObj.Critical(criticalLevelSettingElement.value);
+    factoryObj.setCall(callCostSettingElement.value);
+    factoryObj.setSms(smsCostSettingElement.value);
+    factoryObj.Warning(warningLevelSettingElement.value);
+    factoryObj.Critical(criticalLevelSettingElement.value);
 
   });
 
