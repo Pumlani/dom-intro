@@ -1,70 +1,55 @@
-describe('The SettingsBill function', function () {
+describe('The settings-bill function logic',function(){
 
-    it('Should return the correct total cost of the computed bill with respect to the set costs and quantity of each bill type computed', function () {
+  it('should calculate the total for two call', function(){
 
-        var settingsBill = BillFactory();
+    var FactoryObj = SettingsBill();
 
-        settingsBill.setCall('5');
-        settingsBill.setSms('2');
-        settingsBill.setCritical('10');
-        settingsBill.compute('call');
-        settingsBill.compute('call');
-
-        assert.equal(settingsBill.total(), 10);
-
-    });
-
-    it('Should return a total of 0 if anything not call or sms was computed', function () {
-
-        var settingsBill = BillFactory();
-
-        settingsBill.setCall('');
-        settingsBill.setSms('2');
-        settingsBill.setCritical('10');
-        settingsBill.compute('nothing');
-        settingsBill.compute('');
-
-        assert.equal(settingsBill.total(), 0);
+    FactoryObj.setCall(5);
+    FactoryObj.setSms(2.50);
+    FactoryObj.Warning();
+    FactoryObj.Critical();
 
 
 
-    });
-    it('Should ensure the total is always equal or lower than the critical value', function () {
+    FactoryObj.calculation('call');
+    FactoryObj.calculation('call');
 
-        var settingsBill = BillFactory();
+    assert.equal(FactoryObj.call(), 10);
+    assert.equal(FactoryObj.sms(), 0);
+    assert.equal(FactoryObj.total(), 10);
 
-        settingsBill.setCall('5');
-        settingsBill.setSms('2');
-        settingsBill.setCritical('10');
-        settingsBill.compute('call');
-        settingsBill.compute('call');
-        settingsBill.compute('call');
+  });
 
+  it('should calculate the total for a call and sms', function(){
 
-        assert.isAtMost(settingsBill.total(), settingsBill.bill.critical)
+      var FactoryObj = SettingsBill();
 
+      FactoryObj.setCall(5);
+      FactoryObj.setSms(2.50);
+        FactoryObj.Warning();
+          FactoryObj.Critical();
 
+      FactoryObj.calculation('call');
+      FactoryObj.calculation('sms');
+
+      assert.equal(FactoryObj.call(), 5);
+      assert.equal(FactoryObj.sms(), 2.50);
+      assert.equal(FactoryObj.total(), 7.50);
 
     });
-    it('Should return the correct call total for the computed calls', function () {
+    it('Should make sure the total is lower or equal to the critical value', function () {
 
-        var settingsBill = BillFactory();
+        var FactoryObj = SettingsBill();
 
-        settingsBill.setCall('5');
-        settingsBill.setSms('2');
-        settingsBill.setCritical('20');
-        settingsBill.compute('call');
-        settingsBill.compute('call');
-        settingsBill.compute('call');
+        FactoryObj.setCall('5');
+        FactoryObj.setSms('2');
+        FactoryObj.Critical('10');
+        FactoryObj.calculation('call');
+        FactoryObj.calculation('call');
 
-
-        assert.equal(settingsBill.getCall(), 15)
+        assert.isAtMost(FactoryObj.total(), FactoryObj.getCritical(),'toal is less or equal to critical value')
 
 
 
     });
-
-
-
-
-});
+  });
