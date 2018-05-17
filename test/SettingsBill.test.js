@@ -95,10 +95,51 @@ console.log(factoryObj.total());
     factoryObj.calculation('sms');
 
     assert.equal(true, factoryObj.hasReachedWarningLevel());
-    //assert.equal(20, factoryObj.total());
-
-
-    // assert.isAtMost(factoryObj.total(), factoryObj.getCritical(), 'total is less or equal to critical value')
 
   });
+  it('Should be able to add again when the critical level is increased', function() {
+
+    var factoryObj = SettingsBill();
+
+    factoryObj.setCall('5');
+    factoryObj.setSms('2');
+    factoryObj.Critical('10');
+
+    factoryObj.calculation('call');
+    assert.equal(false, factoryObj.hasReachedCriticalLevel());
+
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('sms');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('sms');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('sms');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('sms');
+
+    assert.equal(true, factoryObj.hasReachedCriticalLevel());
+    assert.equal(10, factoryObj.total());
+
+    factoryObj.Critical('40');
+
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+    factoryObj.calculation('call');
+
+    assert.equal(true, factoryObj.hasReachedCriticalLevel());
+    assert.equal(40, factoryObj.total());
+
+
+
+  });
+
 });
